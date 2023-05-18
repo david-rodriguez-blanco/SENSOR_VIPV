@@ -182,13 +182,13 @@ int main(void)
 
   printf("\n\n\n\n\n");
   printf("#############################################################################################\n"
-		 "#######                   Codigo de Cliente IoT STM32-BL475E-IOT01A                   #######\n"
-         "#######                 Trabajo Final de Grado --- Sergio Vera Munoz                  #######\n"
+		 "#######                 				  SENSOR VIPV   		    		            #######\n"
+         "#######        	     	    Continuacion TFG Sergio Vera	                        #######\n"
          "#######      Sensor IoT para la integracion fotovoltaica en vehiculos electricos      #######\n"
          "#######    Universidad Politecnica de Madrid - ETSIDI - Instituto de Energia Solar    #######\n"
-         "#######                       Madrid - septiembre de 2020    							#######\n"
+         "#######                  		     Madrid - mayo de 2023    							#######\n"
 		 "#######                       							   							#######\n"
-		 "#######                    ** VERSION 2 - SOFTWARE UPDATE **							#######\n"
+		 "#######                  		  ** VERSION 4 - MEMORIA SD **							#######\n"
 		 "#######                      															#######\n"
          "#############################################################################################\n");
   printf("\n\n");

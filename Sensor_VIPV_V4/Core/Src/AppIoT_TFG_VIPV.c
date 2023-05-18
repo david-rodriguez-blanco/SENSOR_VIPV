@@ -160,6 +160,9 @@ void bucle_Principal(void)  {
 
     }
 
+if (OPCION_IoT)			// En el caso de que la opción IoT este desactivada, no compilamos los hilos de publicación ni recuperacion
+{
+
     /*********************************************************************************************************************************/
     /***********************   HILO DE EJECUCCIÓN DE PUBLICACION DE DATOS EN THINGSPEAK **********************************************/
     /*********************************************************************************************************************************/
@@ -177,6 +180,7 @@ void bucle_Principal(void)  {
     		return ;
     	}
 	}
+}
 
     /*********************************************************************************************************************************/
     /********************   HILO DE COMPUTACIÓN ALGORITMO FUSIÓN MEMS Y FILTRO KALMAN ************************************************/
@@ -220,15 +224,18 @@ void hilo1_Lectura(void)
 	if(modo_BajoConsumo) {  salir_LowPowerMode();  } //saliendo del modo de bajo consumo
 #endif
 
-     recabar_Datos( &vectorLecturaDato[contador_lectura]  );
+	recabar_Datos( &vectorLecturaDato[contador_lectura]  );		// Función para obtener los datos de los sensores
 
-		flag_lectura_datos = false; //resetea flag
-		contador_lectura++;
-		contador_MEMS = 0; //reseteo contador MEMS al segundo
+	if (OPCION_IoT == 0)	// Entramos en el bucle cuando la opción IoT está desactivada
+		 escritura_SD( &vectorLecturaDato[contador_lectura] );	// Función para escribir los datos en la tarjeta SD
 
-		if(contador_lectura >= (N_ELEMENTOS-1)){
-		   contador_lectura = (N_ELEMENTOS-1);	//va desde 0 a N-1
-		}
+	flag_lectura_datos = false; //resetea flag
+	contador_lectura++;
+	contador_MEMS = 0; //reseteo contador MEMS al segundo
+
+	if(contador_lectura >= (N_ELEMENTOS-1)){
+	   contador_lectura = (N_ELEMENTOS-1);	//va desde 0 a N-1
+	}
 }
 
 
@@ -313,8 +320,6 @@ void hilo2_Publicacion(void)
 		  }
 
 #endif
-
-      }
 }
 
 /**
@@ -393,7 +398,7 @@ bool publica_DatosThingSpeak(megaDato* miDato)  {
     imprimir_Dato(*miDato);
 #endif
 
-#ifdef PUBLI_DATOS_THINGSPEAK
+
     for(int n_canal = 1; n_canal<=2 ; n_canal++)   {	//Bucle de publicacion en los 2 canales
 
     	printf("\t\tPublicacion de Datos en el Canal %d...\n", n_canal);
@@ -491,7 +496,6 @@ bool publica_DatosThingSpeak(megaDato* miDato)  {
     if (retorno) printf("\n##### Publicacion EXITOSA en los Canales 1 y 2 del servidor ThingSpeak #####\n\n");
     else printf("\nErrores al publicar los Datos, se agregara el dato a la FIFO...\n");
 
-#endif
     return retorno;
 }
 
@@ -918,6 +922,38 @@ void recabar_Datos(megaDato* miLectura){
 
 		//HAL_SuspendTick();
 		//HAL_GPIO_WritePin(GPIOC, ARD_A2_LEDON_Pin, GPIO_PIN_RESET); //indicador visual
+
+}
+
+void escritura_SD(megaDato* miLectura)
+{
+
+	HAL_GPIO_TogglePin(GPIOC, ARD_A1_LEDWIFI_Pin);		//Indicador visual con el led Azul
+
+    printf("\n\t-------------- Datos escritos en memoria SD  ----------------\n"
+    		"%02d-%02d-%04d;%02d:%02d:%02d;%f;%f;%f;%f;%f;%f;%f;%f;%f;%f;%f;%f;%f;%f;%f\n",
+			miLectura->dia,
+			miLectura->mes,
+			miLectura->agno,
+			miLectura->hora,
+			miLectura->min,
+			miLectura->seg,
+			miLectura->irradiancia[0],
+			miLectura->irradiancia[1],
+			miLectura->irradiancia[2],
+			miLectura->irradiancia[3],
+			miLectura->irradiancia[4],
+			miLectura->temperatura,
+			miLectura->presion,
+			miLectura->humedad,
+			miLectura->latitud,
+			miLectura->longitud,
+			miLectura->altitud,
+			miLectura->velocidad,
+			miLectura->alebeo,
+			miLectura->cabeceo,
+			miLectura->guino_brujula
+    		);
 
 }
 

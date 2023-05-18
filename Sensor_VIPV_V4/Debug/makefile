@@ -48,34 +48,34 @@ $(wildcard ../makefile.init) \
 $(wildcard ../makefile.targets) \
 
 
-BUILD_ARTIFACT_NAME := VIPV_V3
+BUILD_ARTIFACT_NAME := VIPV_V4
 BUILD_ARTIFACT_EXTENSION := elf
 BUILD_ARTIFACT_PREFIX :=
 BUILD_ARTIFACT := $(BUILD_ARTIFACT_PREFIX)$(BUILD_ARTIFACT_NAME)$(if $(BUILD_ARTIFACT_EXTENSION),.$(BUILD_ARTIFACT_EXTENSION),)
 
 # Add inputs and outputs from these tool invocations to the build variables 
 EXECUTABLES += \
-VIPV_V3.elf \
+VIPV_V4.elf \
 
 MAP_FILES += \
-VIPV_V3.map \
+VIPV_V4.map \
 
 SIZE_OUTPUT += \
 default.size.stdout \
 
 OBJDUMP_LIST += \
-VIPV_V3.list \
+VIPV_V4.list \
 
 
 # All Target
 all: main-build
 
 # Main-build Target
-main-build: VIPV_V3.elf secondary-outputs
+main-build: VIPV_V4.elf secondary-outputs
 
 # Tool invocations
-VIPV_V3.elf VIPV_V3.map: $(OBJS) $(USER_OBJS) C:\Users\David\Documents\GitHub\SENSOR_VIPV\Sensor_VIPV_V3\STM32L475VGTX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-gcc -o "VIPV_V3.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"C:\Users\David\Documents\GitHub\SENSOR_VIPV\Sensor_VIPV_V3\STM32L475VGTX_FLASH.ld" -Wl,-Map="VIPV_V3.map" -Wl,--gc-sections -static -L../Middlewares/ST/STM32_MotionFX_Library/Lib --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=softfp -mthumb -u _printf_float -u _scanf_float
+VIPV_V4.elf VIPV_V4.map: $(OBJS) $(USER_OBJS) C:\Users\David\Documents\GitHub\SENSOR_VIPV\Sensor_VIPV_V4\STM32L475VGTX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-gcc -o "VIPV_V4.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"C:\Users\David\Documents\GitHub\SENSOR_VIPV\Sensor_VIPV_V4\STM32L475VGTX_FLASH.ld" -Wl,-Map="VIPV_V4.map" -Wl,--gc-sections -static -L../Middlewares/ST/STM32_MotionFX_Library/Lib --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=softfp -mthumb -u _printf_float -u _scanf_float
 	@echo 'Finished building target: $@'
 	@echo ' '
 
@@ -84,14 +84,14 @@ default.size.stdout: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
 	@echo 'Finished building: $@'
 	@echo ' '
 
-VIPV_V3.list: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-objdump -h -S $(EXECUTABLES) > "VIPV_V3.list"
+VIPV_V4.list: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-objdump -h -S $(EXECUTABLES) > "VIPV_V4.list"
 	@echo 'Finished building: $@'
 	@echo ' '
 
 # Other Targets
 clean:
-	-$(RM) VIPV_V3.elf VIPV_V3.list VIPV_V3.map default.size.stdout
+	-$(RM) VIPV_V4.elf VIPV_V4.list VIPV_V4.map default.size.stdout
 	-@echo ' '
 
 secondary-outputs: $(SIZE_OUTPUT) $(OBJDUMP_LIST)

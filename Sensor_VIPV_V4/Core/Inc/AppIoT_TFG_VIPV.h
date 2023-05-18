@@ -23,19 +23,25 @@
 
 
 /* Private macro -------------------------------------------------------------*/
+////////////////////////////////////////////////////////////////////////////////
+////////////////// SECCIÓN PARA ELEGIR OPCIONES ////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
 
-#define ENABLE_SLEEP
+
+//#define ENABLE_SLEEP
 				/*Compila el código habilitando la funcionalidad de entrar en modo Sleep. Comentar para deshabilitar */
 #define ENABLE_IMPRIMIR_MUESTRAS
 				/*Compila el código habilitando la funcionalidad de Imprimir los datos muestreados. Comentar para deshabilitar */
 //#define ENABLE_LOWPWR
 				/*Compila el código habilitando la funcionalidad de Bajo Consumo. Comentar para deshabilitar */
-#define ENABLE_PULSADOR
+//#define ENABLE_PULSADOR
 				/*Compila el código habilitando la funcionalidad de accionar el pulsador para detener publicacion. Comentar para deshabilitar */
-#define PUBLI_DATOS_THINGSPEAK
-				/*Compila el código habilitando la funcionalidad de publicar los datos recabados. Comentar para deshabilitar */
+#define OPCION_IoT 0
+				/* 0 - Carga en tarjeta SD; 1 - Carga datos en nube Thingspeak (seleccionar si se quiere publicar datos concatenados o no) */
 #define PUBLI_DATOS_THINGSPEAK_CONCATENADOS
-				// Compila el código encargado de concatenar y publicar los datos concatenados
+				// Compila el código encargado de concatenar y publicar los datos concatenados. Comentar para deshabilitar.
+				// Si no se compila, solo se publica la información media en los canales 1 y 2
+
 
 
 /*  Defines específicos del proyecto del TFG----------------------------------*/
@@ -109,6 +115,7 @@ void aplicacion_ClienteMQTT_XCLD_IoT(void);
 
 void mideRadiacion(float vectIrradiancia[]);
 void recabar_Datos(megaDato* miLectura); //función de recogida de datos
+void escritura_SD(megaDato* miLectura);	// función de escritura en la memoria externa
 bool publica_DatosThingSpeak(megaDato* miDato);
 bool publica_DatosConcatThingSpeak(megaDatoConcat* miDatoConcat);
 void calcula_mediaVector(megaDato* mediaDatos, megaDato* p_ectorLecturas, uint8_t n_elem );
