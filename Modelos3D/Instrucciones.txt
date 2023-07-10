@@ -1,0 +1,9 @@
+Los archivos se presentan en la mejor posición para favorecer una impresión con el máximo de detalle en las zonas de interés y buscando tener que aportar el menor material de soporte posible. 
+
+Se recomienda utilizar materiales resistentes a las temperaturas (el sensor puede alcanzar los 60ºC durante su funcionamiento!).
+Se recomienda emplear filamento blanco para favorecer la reflexión de la luz. 
+Se recomienda aumentar el número de capas de las paredes al máximo, favoreciendo así el agarre de los insertos roscados. 
+
+Insertos roscados: 
+	- M3: placas electrónicas
+	- M4: cierre del sensor y anclaje a la placa metálica 
